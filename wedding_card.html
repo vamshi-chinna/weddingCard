@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Wedding Card Flipbook</title>
+
+    <!-- Bootstrap CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Italianno&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap"
+        rel="stylesheet">
+
+    <!-- PageFlip CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pageflip@1.0.4/dist/css/pageflip.min.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        p {
+            margin-bottom: 2px;
+        }
+
+        body {
+            background: #f5f5f5;
+            overflow: hidden;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+        }
+
+        #flipbook-container {
+            width: 100%;
+            height: 100%;
+            margin: 0 auto;
+            position: relative;
+            filter: drop-shadow(0px 0px 50px #0d1d3a);
+        }
+
+        /* Fix for PageFlip wrapper */
+        .st_wrapper {
+            width: 100% !important;
+            height: 100% !important;
+            padding: 0 !important;
+            margin: 0 !important;
+        }
+
+        .c-card {
+            position: relative;
+            height: 100% !important;
+            width: 100%;
+            background: #0a1629e9 !important;
+            color: white;
+            overflow: hidden;
+        }
+
+        .c-card::before {
+            content: '';
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            background: url('https://images.pexels.com/photos/931177/pexels-photo-931177.jpeg');
+            background-size: cover;
+            z-index: -1;
+            opacity: 0.08;
+        }
+
+        .card-front .img-1 {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 50%;
+            height: auto;
+            z-index: 1;
+        }
+
+        .card-front .img-2 {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 50%;
+            height: auto;
+            transform: rotate(180deg);
+            z-index: 1;
+        }
+
+        .front-contnet {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            position: relative;
+            z-index: 2;
+            height: 100%;
+        }
+
+        .front-context {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            padding: 3rem 1rem;
+            height: 100%;
+        }
+
+        .ganesha-logo {
+            width: 10rem;
+            height: 10rem;
+            overflow: hidden;
+            object-fit: cover;
+            position: relative;
+            z-index: 3;
+            border-radius: 50%;
+            filter: drop-shadow(10px 10px 50px rgba(0, 0, 0, 0.667));
+            margin-bottom: 2rem;
+        }
+
+        .ganesha-logo img {
+            width: 100%;
+            height: auto;
+            position: relative;
+            filter: sepia(3);
+            z-index: -1;
+        }
+
+        .names {
+            font-family: "Playfair Display", serif;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-size: 2.5rem;
+        }
+
+        h4 {
+            margin-bottom: 0rem;
+        }
+
+        .weds {
+            font-family: "Italianno", cursive;
+            position: relative;
+        }
+
+        .weds::before {
+            content: '';
+            position: absolute;
+            top: 36px;
+            left: 23%;
+            width: 1rem;
+            height: 2px;
+            background: white;
+        }
+
+        .weds::after {
+            content: '';
+            position: absolute;
+            top: 36px;
+            right: 23%;
+            width: 1rem;
+            height: 2px;
+            background: white;
+        }
+
+        .weds p {
+            margin-bottom: 0rem !important;
+            font-size: 3rem;
+            color: gold;
+        }
+
+        .p1 {
+            font-family: 'Italianno', cursive;
+            font-size: 1.8rem;
+            color: gold;
+        }
+
+        .p2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1rem;
+            opacity: 0.8;
+        }
+
+        .inner-page-content {
+            padding: 3rem;
+            height: 100%;
+            font-family: 'Playfair Display', serif;
+            display: grid;
+            place-content: center;
+        }
+
+        .title {
+            position: relative;
+        }
+
+        .title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            translate: -55px;
+            width: 8rem;
+            height: .2rem;
+            border-radius: 20px;
+            background: white;
+        }
+
+
+        .back-cover {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .back-cover h5 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .back-cover p {
+            font-family: 'Italianno', cursive;
+            font-size: 1.8rem;
+            color: gold;
+        }
+
+        @media (max-width: 768px) {
+            #flipbook-container {
+                max-height: 95%;
+            }
+
+            .names {
+                font-size: 1.8rem;
+            }
+
+            .weds p {
+                font-size: 2.5rem;
+            }
+
+            .inner-page-content {
+                padding: 1.5rem;
+            }
+        }
+
+        .stf__wrapper {
+            width: 100% !important;
+            height: 100% !important;
+            padding-bottom: 0 !important;
+            position: relative !important;
+        }
+
+        .stf__block {
+            width: 100% !important;
+            height: 100% !important;
+            position: relative !important;
+        }
+
+        .stf__item {
+            width: 50% !important;
+        }
+
+        @media (max-width:576px) {
+            .stf__item {
+                width: 100% !important;
+            }
+
+            #flipbook-container {
+                max-height: 100%;
+            }
+
+        }
+
+        .--right::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5rem;
+            height: 100%;
+            z-index: 1000;
+            background: linear-gradient(to right, #0a1629e9 , rgba(36, 35, 35, 0));
+            pointer-events: none;
+        }
+
+        .--left::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 5rem;
+            height: 100%;
+            z-index: 1000;
+            background: linear-gradient(to left, #0a1629e9 , rgba(36, 35, 35, 0));
+            pointer-events: none;
+        }
+    </style>
+</head>
+
+<body class="p-1 p-md-2 ">
+    <div id="flipbook-container"></div>
+
+    <!-- PageFlip JS -->
+    <script src="page-flip.browser.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Create flipbook container
+            const container = document.getElementById('flipbook-container');
+
+            // Check screen size
+            const isMobile = window.innerWidth <= 576;
+
+            // Create pages as DOM elements
+            const createPage1 = () => {
+                const page = document.createElement('div');
+                page.className = 'c-card card-front';
+                page.innerHTML = `
+                    <img src="https://media-public.canva.com/5CsFo/MAFyRB5CsFo/1/s.png" alt="" class="img-1">
+                    <div class="front-contnet">
+                        <div class="ganesha-logo">
+                            <img src="https://static.vecteezy.com/system/resources/previews/052/919/550/large_2x/happy-ganesh-chaturthi-vinayaka-chavithi-special-black-and-white-silhouette-art-of-hindu-god-lord-ganesha-free-illustration-design-free-vector.jpg"
+                                alt="lord-ganesha">
+                        </div>
+                        <div class="invite-contnet text-center text-white px-3">
+                            <h4 class="names">jothy ram</h4>
+                            <div class="weds my-md-2">
+                                <p>Weds</p>
+                            </div>
+                            <h4 class="names">Ammai</h4>
+                            <p class="mt-md-4  mt-2 p1">
+                                With love and blessings
+                            </p>
+                            <p class="p2">
+                                You are cordially invited to grace <br> our wedding ceremony
+                            </p>
+                        </div>
+                    </div>
+                    <img src="https://media-public.canva.com/5CsFo/MAFyRB5CsFo/1/s.png" alt="" class="img-2">
+                `;
+                return page;
+            };
+
+            const createPage2 = () => {
+                const page = document.createElement('div');
+                page.className = 'c-card';
+                page.innerHTML = `
+                    <div class="inner-page-content text-center">
+                        <h2 class="mb-4 title">Wedding Invitation</h2>
+                        <p>With the divine blessings of Lord Venkateshwara</p>
+                        <p>Smt. p.peddamma & Sri. p.paddanana</p>
+                        <p>cordially invite you to the wedding of their beloved son</p>
+                        <h4 class="my-2 text-uppercase">Jothy Ram</h3>
+                        <p>with</p>
+                        <p>Smt. Atta & Sri. Mava Rao</p>
+                        <p>beloved daughter</p>
+                        <h4 class="my-2 text-uppercase">Anmai</h3>
+                        <p><strong>Muhurtham:</strong> Sunday, 18th August 2025<br>10:30 AM to 11:30 AM</p>
+                        <p><strong>Venue:</strong><br>Sri Lakshmi Function Hall, Rlykodur <br> Kadapa, Andhra Pradesh</p>
+                        <p class="">Your gracious presence and blessings are deeply cherished.</p>
+                        <p class="mt-2">With warm regards,<br>The Families of the Bride & Groom</p>
+                    </div>
+                `;
+                return page;
+            };
+
+            const createPage3 = () => {
+                const page = document.createElement('div');
+                page.className = 'c-card';
+                page.innerHTML = `
+                    <div class="inner-page-content text-center">
+                        <h4>Reception</h4>
+                        <p>Join us for a joyful evening of celebrations</p>
+                        <p>Date: Sunday, 18th August 2025</p>
+                        <p>Time: 6:00 PM onwards</p>
+                        <p>Venue: Same as Wedding</p>
+                        <hr>
+                        <p>With love,<br>Families of the Bride & Groom</p>
+                    </div>
+                `;
+                return page;
+            };
+
+            const createPage4 = () => {
+                const page = document.createElement('div');
+                page.className = 'c-card';
+                page.innerHTML = `
+                    <div class="inner-page-content text-center">
+                        <h2 class="mb-4">Thank You</h2>
+                        <p>For being part of our special day</p>
+                          <p style="font-family: 'Italianno', cursive;font-size: 1.8rem;color: gold;">We look forward to your presence</p>
+                        <div class="mt-4">
+                            <p>Jothy Ram & Ammai</p>
+                            <p>18th August 2025</p>
+                        </div>
+                    </div>
+                `;
+                return page;
+            };
+
+
+
+            // Initialize the flipbook
+            const flipbook = new St.PageFlip(
+                document.getElementById('flipbook-container'),
+                {
+                    width: !isMobile ? container.clientWidth / 2 : container.clientWidth,
+                    height: container.clientHeight,
+                    size: 'fixed',
+                    maxShadowOpacity: 0.5,
+                    showCover: true,
+                    viewMode: 'auto',
+                    mobileScrollSupport: isMobile,
+                    usePortrait: isMobile,
+                    drawShadow: !isMobile,
+                    flippingTime: isMobile ? 300 : 500,
+                    swipeDistance: isMobile ? 30 : 10
+                }
+            );
+
+            // Create pages array with DOM elements
+            const pages = [
+                createPage1(),
+                createPage2(),
+                createPage3(),
+                createPage4(),
+            ];
+
+            // Load pages
+            flipbook.loadFromHTML(pages);
+
+
+
+            // Adjust for mobile
+            function adjustForMobile() {
+                const isNowMobile = window.innerWidth <= 576;
+                const container = document.getElementById('flipbook-container');
+
+                flipbook.updateOptions({
+                    width: container.clientWidth,
+                    height: container.clientHeight,
+                    mobileScrollSupport: isNowMobile,
+                    drawShadow: !isNowMobile
+                });
+
+
+                flipbook.update();
+            }
+
+            // Initial adjustment
+            adjustForMobile();
+
+            // Adjust on resize with debounce
+            let resizeTimer;
+            window.addEventListener('resize', () => {
+                clearTimeout(resizeTimer);
+                resizeTimer = setTimeout(() => {
+                    adjustForMobile();
+                }, 250);
+            });
+        });
+    </script>
+</body>
+
+</html>
